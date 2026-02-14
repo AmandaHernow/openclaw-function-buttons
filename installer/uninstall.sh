@@ -37,19 +37,20 @@ DESKTOP_FILES=(
 
 echo -e "\n📋 Checking installation..."
 
-# Find actual installation directory
-INSTALL_DIR=""
+# Find all installation directories (multiple may exist)
+FOUND_DIRS=()
 for dir in "${POSSIBLE_INSTALL_DIRS[@]}"; do
     if [ -d "$dir" ]; then
-        INSTALL_DIR="$dir"
-        echo -e "${GREEN}✅ Found installation directory: $INSTALL_DIR${NC}"
-        break
+        FOUND_DIRS+=("$dir")
+        echo -e "${GREEN}✅ Found installation directory: $dir${NC}"
     fi
 done
 
-if [ -z "$INSTALL_DIR" ]; then
-    echo -e "${YELLOW}⚠️  No installation directory found${NC}"
+if [ ${#FOUND_DIRS[@]} -eq 0 ]; then
+    echo -e "${YELLOW}⚠️  No installation directories found${NC}"
     echo -e "${YELLOW}   The buttons may have been installed elsewhere or already removed.${NC}"
+else
+    echo -e "${GREEN}✅ Found ${#FOUND_DIRS[@]} installation directory(ies)${NC}"
 fi
 
 # Remove desktop files from user's Desktop
@@ -67,11 +68,15 @@ for file in "${DESKTOP_FILES[@]}"; do
     fi
 done
 
-# Remove installation directory
-if [ -n "$INSTALL_DIR" ] && [ -d "$INSTALL_DIR" ]; then
+# Remove all installation directories
+if [ ${#FOUND_DIRS[@]} -gt 0 ]; then
     echo -e "\n🗑️  Removing installation files..."
-    rm -rf "$INSTALL_DIR"
-    echo -e "${GREEN}✅ Removed installation directory: $INSTALL_DIR${NC}"
+    for dir in "${FOUND_DIRS[@]}"; do
+        if [ -d "$dir" ]; then
+            rm -rf "$dir"
+            echo -e "${GREEN}✅ Removed installation directory: $dir${NC}"
+        fi
+    done
 fi
 
 # Update desktop database (for system-wide .desktop files)
@@ -100,10 +105,21 @@ fi
 echo -e "\n📊 Uninstall Summary"
 echo "=================="
 echo -e "${GREEN}✅ Removed $REMOVED_COUNT desktop button(s)${NC}"
-if [ -n "$INSTALL_DIR" ] && [ -d "$INSTALL_DIR" ]; then
-    echo -e "${RED}❌ Could not remove installation directory${NC}"
-    echo -e "${YELLOW}   You may need to remove it manually:${NC}"
-    echo -e "${YELLOW}   rm -rf $INSTALL_DIR${NC}"
+REMAINING_DIRS=0
+for dir in "${FOUND_DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+        REMAINING_DIRS=$((REMAINING_DIRS + 1))
+    fi
+done
+
+if [ $REMAINING_DIRS -gt 0 ]; then
+    echo -e "${RED}❌ Could not remove $REMAINING_DIRS installation directory(ies)${NC}"
+    echo -e "${YELLOW}   You may need to remove them manually:${NC}"
+    for dir in "${FOUND_DIRS[@]}"; do
+        if [ -d "$dir" ]; then
+            echo -e "${YELLOW}   rm -rf $dir${NC}"
+        fi
+    done
 else
     echo -e "${GREEN}✅ Removed all installation files${NC}"
 fi
