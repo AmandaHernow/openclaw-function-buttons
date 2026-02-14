@@ -1,0 +1,66 @@
+{
+  "buttons": [
+    {
+      "id": "gateway-restart",
+      "name": "Gateway Restart",
+      "description": "Restart OpenClaw gateway to fix connection issues",
+      "category": "system",
+      "essential": true
+    },
+    {
+      "id": "save-context",
+      "name": "Save Context",
+      "description": "Save current conversation and memory to prevent loss",
+      "category": "memory",
+      "essential": true
+    },
+    {
+      "id": "memory-backup",
+      "name": "Memory Backup",
+      "description": "Create a full backup of all memory files",
+      "category": "memory",
+      "essential": false
+    },
+    {
+      "id": "system-status",
+      "name": "System Status",
+      "description": "Check OpenClaw system status and health",
+      "category": "system",
+      "essential": false
+    },
+    {
+      "id": "quick-chat",
+      "name": "Quick Chat",
+      "description": "Open a quick chat window with OpenClaw",
+      "category": "communication",
+      "essential": false
+    },
+    {
+      "id": "cron-manager",
+      "name": "Cron Manager",
+      "description": "Manage and monitor cron jobs",
+      "category": "system",
+      "essential": false
+    },
+    {
+      "id": "add-more",
+      "name": "Add More",
+      "description": "Add more buttons from the library",
+      "category": "management",
+      "essential": true
+    },
+    {
+      "id": "button-library",
+      "name": "Button Library",
+      "description": "Browse and manage available buttons",
+      "category": "management",
+      "essential": true
+    }
+  ],
+  "categories": {
+    "system": "System Tools",
+    "memory": "Memory & Backup",
+    "communication": "Communication",
+    "management": "Button Management"
+  }
+}

@@ -15,9 +15,10 @@ cd openclaw-function-buttons
 ./installer/one-command-setup.sh
 ```
 
-That's it! Two desktop buttons will appear on your desktop:
-- **Gateway Restart** - Restart OpenClaw gateway service
-- **Save Context** - Save current conversation to memory
+The smart installer will guide you through:
+1. **Installation location** - Choose where buttons are installed
+2. **Button selection** - Pick which optional buttons to install
+3. **Automatic setup** - Everything configured automatically
 
 ### Uninstallation
 
@@ -29,80 +30,110 @@ cd openclaw-function-buttons
 
 ## 📋 What You Get
 
-### 🎯 Gateway Restart Button
-- **One-click gateway restart** - Fixes connection issues instantly
-- **Visual feedback** - Shows restart progress in terminal
-- **Service management** - Uses systemd for reliable restarts
-- **Error handling** - Catches and displays any issues
+### 🎯 Essential Buttons (Always Installed)
+- **Gateway Restart** - Fix connection issues instantly
+- **Save Context** - Save conversations to prevent memory loss
+- **Add More** - Add new buttons from the library (plus sign icon)
+- **Button Library** - Browse and manage available buttons
 
-### 💾 Save Context Button  
-- **Instant memory save** - Saves current conversation with one click
-- **Timestamped entries** - Automatically adds date/time to memory
-- **Clean formatting** - Organizes saved context for easy reading
-- **Works anywhere** - Saves from any OpenClaw session
+### 📦 Optional Buttons (Choose During Installation)
+- **Memory Backup** - Create full backups of all memory files
+- **System Status** - Check OpenClaw health and system status
+- **Quick Chat** - Open webchat interface instantly
+- **Cron Manager** - Manage and monitor scheduled tasks
 
-## 🖥️ How It Works
+## 🎯 Smart Features
 
-1. **Click the desktop button**
-2. **Terminal opens** showing the action
-3. **Action executes** with progress display
-4. **Results shown** in terminal
-5. **Close terminal** when done
+### 🔧 Button Library System
+- **Selective installation** - Choose only the buttons you need
+- **Easy expansion** - Add more buttons anytime with "Add More"
+- **Category organization** - Buttons grouped by function
+- **Essential vs Optional** - Core functionality always available
 
-No terminal commands to remember, no configuration needed.
+### 📁 Flexible Installation
+Choose where buttons are installed:
+1. **Home directory** (`~/OpenClaw-Buttons/`) - Organized and out of sight
+2. **Desktop** - Easy one-click access
+3. **Both locations** - Best of both worlds
+
+### 🖱️ One-Click Operation
+1. **Double-click desktop button**
+2. **Action executes automatically**
+3. **Results shown in terminal**
+4. **Close when done**
+
+No commands to remember, no configuration needed.
 
 ## 🛠️ For Advanced Users
 
-### Manual Installation
+### Manual Button Management
 ```bash
-# Copy buttons to your preferred location
-cp -r buttons/ ~/.local/share/openclaw-buttons/
+# Run installer again to add more buttons
+cd openclaw-function-buttons
+./installer/one-command-setup.sh
 
-# Create desktop entries manually
-cp installer/*.desktop ~/.local/share/applications/
+# Check available buttons
+./library/button-library.sh
 ```
 
-### Customization
-Edit the button scripts in `buttons/` to:
-- Change command behavior
-- Add custom actions
-- Modify output formatting
+### Creating Custom Buttons
+1. Create script in `library/` directory
+2. Design icon in `library/icons/`
+3. Add entry to `library/button-library.json`
+4. Run installer to add to your system
 
-### Creating New Buttons
-1. Copy `buttons/template.sh` to a new file
-2. Edit the script with your OpenClaw command
-3. Run the installer to add it to desktop
+### Library Structure
+```
+library/
+├── button-library.json      # Button catalog and metadata
+├── *.sh                     # Button scripts
+├── icons/*.svg             # Button icons
+└── button-library.sh       # Library browser
+```
 
 ## 📁 Project Structure
 
 ```
 openclaw-function-buttons/
-├── buttons/                    # Button scripts
-│   ├── gateway-restart.sh     # Restart gateway service
-│   ├── save-context.sh        # Save conversation to memory
-│   └── template.sh            # Template for new buttons
-├── icons/                     # Button icons
-│   ├── gateway-restart.svg    # Gateway restart icon
-│   └── save-context.svg       # Save context icon
-├── installer/                 # Installation scripts
-│   ├── one-command-setup.sh   # Main installer
-│   └── uninstall.sh           # Clean removal
-├── docs/                      # Documentation
-│   └── PROJECT_PLAN.md        # Development roadmap
-├── logo.svg                   # Project logo
-├── banner.svg                 # Project banner
-└── README.md                  # This file
+├── library/                    # Button library system
+│   ├── button-library.json    # Button catalog
+│   ├── *.sh                   # All button scripts
+│   ├── icons/*.svg           # All button icons
+│   └── button-library.sh     # Library browser
+├── installer/                 # Installation system
+│   ├── one-command-setup.sh  # Smart installer
+│   └── uninstall.sh          # Complete removal
+├── docs/                     # Documentation
+│   └── PROJECT_PLAN.md       # Development roadmap
+├── logo.svg                  # Project logo
+├── banner.svg                # Project banner
+└── README.md                 # This file
 ```
+
+## 🚀 Planned Features
+
+### Coming Soon
+- **Button Template Creator** - Create custom buttons easily
+- **One-Click Updates** - Update all buttons at once
+- **Theme Support** - Different visual styles
+- **More Button Types** - Expanded functionality
+
+### Current Development Focus
+- **Stability** - Reliable one-click operation
+- **Simplicity** - Easy to understand and use
+- **Expandability** - Easy to add new buttons
+- **User Experience** - Intuitive and helpful
 
 ## 🤝 Contributing
 
 Want to add more buttons? Here's how:
 
 1. **Fork the repository**
-2. **Create a new button script** in `buttons/`
-3. **Design an icon** in `icons/`
-4. **Test it works** with `./test-buttons.sh`
-5. **Submit a pull request**
+2. **Create new button script** in `library/`
+3. **Design icon** in `library/icons/`
+4. **Add entry** to `library/button-library.json`
+5. **Test with installer**
+6. **Submit pull request**
 
 Check `docs/PROJECT_PLAN.md` for planned features and ideas.
 
@@ -115,16 +146,20 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **OpenClaw** installed and configured
 - **Linux desktop** with .desktop file support
 - **Bash shell** available
-- **Systemd** for service management (gateway restart)
+- **Python 3** (for JSON parsing in installer)
+- **Systemd** for service management
 
 ## 🔗 Links
 
 - **OpenClaw Documentation**: https://docs.openclaw.ai
 - **OpenClaw Community**: https://discord.com/invite/clawd
 - **Report Issues**: GitHub Issues
+- **Live Demo**: Try the installer!
 
 ---
 
 **Made with ❤️ for the OpenClaw community**
 
-*Simplify your OpenClaw workflow with one-click buttons*
+*"Systems break. Memories are forever."*
+
+*Simplify your OpenClaw workflow with smart one-click buttons*

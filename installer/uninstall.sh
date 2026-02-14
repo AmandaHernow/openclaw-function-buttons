@@ -25,6 +25,12 @@ POSSIBLE_INSTALL_DIRS=(
 DESKTOP_FILES=(
     "gateway-restart.desktop"
     "save-context.desktop"
+    "add-more.desktop"
+    "button-library.desktop"
+    "memory-backup.desktop"
+    "system-status.desktop"
+    "quick-chat.desktop"
+    "cron-manager.desktop"
     "OpenClaw-Emergency-Restart.desktop"   # Legacy emergency buttons
     "OpenClaw-Emergency-Shutdown.desktop"  # Legacy emergency buttons
 )
