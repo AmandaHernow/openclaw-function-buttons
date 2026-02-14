@@ -10,7 +10,7 @@
 
 ```bash
 # Clone and install with one command
-git clone https://github.com/[USERNAME]/openclaw-function-buttons.git
+git clone https://github.com/AmandaHernow/openclaw-function-buttons.git
 cd openclaw-function-buttons
 ./installer/one-command-setup.sh
 ```
