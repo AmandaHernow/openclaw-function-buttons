@@ -49,8 +49,10 @@ echo ""
 echo "📁 Backup files created:"
 ls -la "$BACKUP_DIR" | grep "$TIMESTAMP"
 echo ""
-echo "💡 Your conversation and memory are now safe."
+echo "💾 Your conversation and memory are now safe."
 echo "   If you lose connection, this context can be restored."
+echo ""
+echo "✨ Systems break. Memories are forever."
 
 # Keep terminal open for 5 seconds so user can read output
 sleep 5

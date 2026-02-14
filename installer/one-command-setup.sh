@@ -59,11 +59,9 @@ echo ""
 echo "🔧 Installing button scripts..."
 cp buttons/*.sh "$INSTALL_DIR/" 2>/dev/null
 
-# Copy icons (cyberpunk style!)
-echo "🎨 Installing cyberpunk icons..."
+# Copy icons
+echo "🎨 Installing icons..."
 mkdir -p "$INSTALL_DIR/icons"
-cp icons/cyber-*.svg "$INSTALL_DIR/icons/" 2>/dev/null
-# Also copy regular icons as fallback
 cp icons/*.svg "$INSTALL_DIR/icons/" 2>/dev/null
 
 # Create desktop files for GUI integration
@@ -80,7 +78,7 @@ Type=Application
 Name=OpenClaw: ${BUTTON_NAME//-/ }
 Comment=One-click ${BUTTON_NAME//-/ } for OpenClaw
 Exec=bash -c "cd '$INSTALL_DIR' && './$BUTTON_NAME.sh'; exec bash"
-Icon=$INSTALL_DIR/icons/cyber-$BUTTON_NAME.svg
+Icon=$INSTALL_DIR/icons/$BUTTON_NAME.svg
 Terminal=true
 Categories=Utility;
 EOF
