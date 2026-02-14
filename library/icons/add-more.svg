@@ -1,7 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect x="10" y="10" width="80" height="80" rx="15" fill="#4a5568" stroke="#2d3748" stroke-width="2"/>
-  <circle cx="50" cy="50" r="25" fill="#48bb78" stroke="#2d3748" stroke-width="2"/>
-  <path d="M50 35 L50 65 M35 50 L65 50" stroke="white" stroke-width="6" stroke-linecap="round"/>
-  <rect x="30" y="75" width="40" height="10" rx="3" fill="#4299e1"/>
-  <text x="50" y="82" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="white" font-weight="bold">Add More</text>
+  <!-- Transparent background with subtle shadow -->
+  <rect x="10" y="10" width="80" height="80" rx="15" fill="none" stroke="#2d3748" stroke-width="2" opacity="0.8"/>
+  <rect x="15" y="15" width="70" height="70" rx="10" fill="#2d3748" opacity="0.9"/>
+  
+  <!-- Plus sign -->
+  <rect x="40" y="30" width="20" height="40" rx="3" fill="#4299e1"/>
+  <rect x="30" y="40" width="40" height="20" rx="3" fill="#48bb78"/>
+  
+  <!-- Small buttons around -->
+  <circle cx="30" cy="30" r="8" fill="#f6ad55" opacity="0.7"/>
+  <circle cx="70" cy="30" r="8" fill="#4299e1" opacity="0.7"/>
+  <circle cx="30" cy="70" r="8" fill="#48bb78" opacity="0.7"/>
+  <circle cx="70" cy="70" r="8" fill="#f6ad55" opacity="0.7"/>
 </svg>

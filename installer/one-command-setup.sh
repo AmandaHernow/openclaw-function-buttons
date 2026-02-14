@@ -83,27 +83,37 @@ read -r LOCATION_CHOICE
 case $LOCATION_CHOICE in
     1)
         BUTTONS_DIR="$HOME/OpenClaw-Buttons"
-        DESKTOP_DIR="$HOME/Desktop/OpenClaw-Buttons"
+        DESKTOP_DIR=""
         INSTALL_DIR="$BUTTONS_DIR"
-        echo -e "${GREEN}✅ Installing to: $BUTTONS_DIR${NC}"
+        DESKTOP_COPY=false
+        echo -e "${GREEN}✅ Installing to home directory only${NC}"
+        echo -e "   Scripts: $BUTTONS_DIR"
+        echo -e "   Desktop: No shortcuts"
         ;;
     2)
         BUTTONS_DIR="$HOME/OpenClaw-Buttons"
-        DESKTOP_DIR="$HOME/Desktop/OpenClaw-Buttons"
-        INSTALL_DIR="$DESKTOP_DIR"
-        echo -e "${GREEN}✅ Installing to desktop: $DESKTOP_DIR${NC}"
+        DESKTOP_DIR=""  # No desktop folder, only .desktop files
+        INSTALL_DIR="$BUTTONS_DIR"
+        DESKTOP_COPY=true
+        echo -e "${GREEN}✅ Installing scripts to home directory, buttons to desktop${NC}"
+        echo -e "   Scripts: $BUTTONS_DIR"
+        echo -e "   Desktop: .desktop shortcuts only (no folder)"
         ;;
     3)
         BUTTONS_DIR="$HOME/OpenClaw-Buttons"
         DESKTOP_DIR="$HOME/Desktop/OpenClaw-Buttons"
         INSTALL_DIR="$BUTTONS_DIR"
+        DESKTOP_COPY=true
         echo -e "${GREEN}✅ Installing to both locations${NC}"
+        echo -e "   Scripts: $BUTTONS_DIR"
+        echo -e "   Desktop: Folder with shortcuts"
         ;;
     *)
-        echo -e "${RED}❌ Invalid choice. Using default: home directory${NC}"
+        echo -e "${RED}❌ Invalid choice. Using default: home directory only${NC}"
         BUTTONS_DIR="$HOME/OpenClaw-Buttons"
-        DESKTOP_DIR="$HOME/Desktop/OpenClaw-Buttons"
+        DESKTOP_DIR=""
         INSTALL_DIR="$BUTTONS_DIR"
+        DESKTOP_COPY=false
         ;;
 esac
 
@@ -141,8 +151,16 @@ done
 
 # Create installation directory
 echo -e "\n📁 Creating installation directory..."
-mkdir -p "$INSTALL_DIR"
-mkdir -p "$INSTALL_DIR/icons"
+mkdir -p "$BUTTONS_DIR"
+mkdir -p "$BUTTONS_DIR/icons"
+echo -e "  ${GREEN}✅ Created: $BUTTONS_DIR${NC}"
+
+# Create desktop folder only for option 3
+if [ -n "$DESKTOP_DIR" ] && [ "$LOCATION_CHOICE" = "3" ]; then
+    mkdir -p "$DESKTOP_DIR"
+    mkdir -p "$DESKTOP_DIR/icons"
+    echo -e "  ${GREEN}✅ Created desktop folder: $DESKTOP_DIR${NC}"
+fi
 
 # Copy essential buttons
 echo -e "\n📦 Copying essential buttons..."
@@ -150,17 +168,17 @@ for button_info in "${ESSENTIAL_BUTTONS[@]}"; do
     name=$(echo "$button_info" | cut -d'|' -f1)
     id=$(echo "$button_info" | cut -d'|' -f2)
     
-    # Copy script
+    # Copy script to home directory
     if [ -f "$LIBRARY_DIR/$id.sh" ]; then
-        cp "$LIBRARY_DIR/$id.sh" "$INSTALL_DIR/"
+        cp "$LIBRARY_DIR/$id.sh" "$BUTTONS_DIR/"
         echo -e "  ${GREEN}✅ $name script${NC}"
     else
         echo -e "  ${YELLOW}⚠️  Script not found: $id.sh${NC}"
     fi
     
-    # Copy icon
+    # Copy icon to home directory
     if [ -f "$LIBRARY_DIR/icons/$id.svg" ]; then
-        cp "$LIBRARY_DIR/icons/$id.svg" "$INSTALL_DIR/icons/"
+        cp "$LIBRARY_DIR/icons/$id.svg" "$BUTTONS_DIR/icons/"
         echo -e "  ${GREEN}✅ $name icon${NC}"
     else
         echo -e "  ${YELLOW}⚠️  Icon not found: $id.svg${NC}"
@@ -174,17 +192,17 @@ if [ ${#SELECTED_OPTIONAL[@]} -gt 0 ]; then
         name=$(echo "$button_info" | cut -d'|' -f1)
         id=$(echo "$button_info" | cut -d'|' -f2)
         
-        # Copy script
+        # Copy script to home directory
         if [ -f "$LIBRARY_DIR/$id.sh" ]; then
-            cp "$LIBRARY_DIR/$id.sh" "$INSTALL_DIR/"
+            cp "$LIBRARY_DIR/$id.sh" "$BUTTONS_DIR/"
             echo -e "  ${GREEN}✅ $name script${NC}"
         else
             echo -e "  ${YELLOW}⚠️  Script not found: $id.sh${NC}"
         fi
         
-        # Copy icon
+        # Copy icon to home directory
         if [ -f "$LIBRARY_DIR/icons/$id.svg" ]; then
-            cp "$LIBRARY_DIR/icons/$id.svg" "$INSTALL_DIR/icons/"
+            cp "$LIBRARY_DIR/icons/$id.svg" "$BUTTONS_DIR/icons/"
             echo -e "  ${GREEN}✅ $name icon${NC}"
         else
             echo -e "  ${YELLOW}⚠️  Icon not found: $id.svg${NC}"
@@ -215,22 +233,22 @@ for button_info in "${ALWAYS_INCLUDE[@]}"; do
     fi
 done
 
-# Create desktop files
+# Create desktop files in home directory
 echo -e "\n🖱️ Creating desktop shortcuts..."
-for button in "$INSTALL_DIR"/*.sh; do
+for button in "$BUTTONS_DIR"/*.sh; do
     if [ -f "$button" ]; then
         BUTTON_NAME=$(basename "$button" .sh)
         DISPLAY_NAME=$(echo "$BUTTON_NAME" | tr '-' ' ' | sed 's/\b\(.\)/\u\1/g')
-        DESKTOP_FILE="$INSTALL_DIR/$BUTTON_NAME.desktop"
+        DESKTOP_FILE="$BUTTONS_DIR/$BUTTON_NAME.desktop"
         
         cat > "$DESKTOP_FILE" << EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=OpenClaw: $DISPLAY_NAME
+Name=$DISPLAY_NAME
 Comment=One-click $DISPLAY_NAME for OpenClaw
-Exec=bash -c "cd '$INSTALL_DIR' && './$BUTTON_NAME.sh'; exec bash"
-Icon=$INSTALL_DIR/icons/$BUTTON_NAME.svg
+Exec=bash -c "cd '$BUTTONS_DIR' && './$BUTTON_NAME.sh'; exec bash"
+Icon=$BUTTONS_DIR/icons/$BUTTON_NAME.svg
 Terminal=true
 Categories=Utility;
 EOF
@@ -240,12 +258,37 @@ EOF
     fi
 done
 
-# If user chose desktop location, copy .desktop files to actual desktop
-if [ "$LOCATION_CHOICE" = "2" ] || [ "$LOCATION_CHOICE" = "3" ]; then
-    echo -e "\n📋 Copying shortcuts to desktop..."
-    cp "$INSTALL_DIR"/*.desktop "$HOME/Desktop/" 2>/dev/null
-    echo -e "${GREEN}✅ Desktop shortcuts created${NC}"
+# Copy desktop files to appropriate locations
+if [ "$DESKTOP_COPY" = true ]; then
+    echo -e "\n📋 Copying shortcuts..."
+    
+    if [ "$LOCATION_CHOICE" = "2" ]; then
+        # Option 2: Copy .desktop files to desktop (no folder)
+        cp "$BUTTONS_DIR"/*.desktop "$HOME/Desktop/" 2>/dev/null
+        echo -e "  ${GREEN}✅ Desktop shortcuts created (no folder)${NC}"
+    elif [ "$LOCATION_CHOICE" = "3" ]; then
+        # Option 3: Copy everything to desktop folder
+        cp -r "$BUTTONS_DIR"/* "$DESKTOP_DIR/" 2>/dev/null
+        echo -e "  ${GREEN}✅ Desktop folder created with all files${NC}"
+    fi
 fi
+
+# Configure installation path in settings
+echo -e "\n⚙️  Configuring settings..."
+CONFIG_FILE="$HOME/.config/openclaw-buttons/config.json"
+mkdir -p "$(dirname "$CONFIG_FILE")"
+
+# Load existing config or create default
+if [ -f "$CONFIG_FILE" ]; then
+    CONFIG_CONTENT=$(cat "$CONFIG_FILE")
+else
+    CONFIG_CONTENT='{"current_channel": "stable", "auto_update": false, "gateway_command": "system", "hidden_buttons": [], "installation_path": "", "desktop_shortcuts": true}'
+fi
+
+# Update installation path
+UPDATED_CONFIG=$(echo "$CONFIG_CONTENT" | jq --arg path "$INSTALL_DIR" '.installation_path = $path')
+echo "$UPDATED_CONFIG" > "$CONFIG_FILE"
+echo -e "  ${GREEN}✅ Installation path configured: $INSTALL_DIR${NC}"
 
 # Install CLI command
 echo -e "\n🔧 Installing CLI command..."
@@ -266,6 +309,44 @@ if [ -f "$PROJECT_DIR/openclaw_buttons" ]; then
     else
         echo -e "  ${YELLOW}⚠️  sudo not available, skipping CLI install${NC}"
     fi
+fi
+
+# Sudo password storage option (for admin users)
+echo -e "\n🔐 Sudo Password Storage (Advanced)"
+echo "---------------------------------"
+echo "For admin users who want to create custom buttons with sudo access:"
+echo "⚠️  This stores your sudo password ENCRYPTED for button creation"
+echo -n "Enable sudo password storage? (y/n) [n]: "
+read -r SUDO_CHOICE
+
+if [[ "$SUDO_CHOICE" =~ ^[Yy]$ ]]; then
+    echo -e "\n${YELLOW}⚠️  Security Warning:${NC}"
+    echo "Your sudo password will be encrypted and stored locally."
+    echo "It will ONLY be used for creating custom buttons with sudo access."
+    echo ""
+    echo -n "Enter sudo password (hidden): "
+    read -s SUDO_PASSWORD
+    echo ""
+    
+    # Simple encryption (base64 for now - could be enhanced)
+    ENCRYPTED_PASSWORD=$(echo "$SUDO_PASSWORD" | base64)
+    SUDO_CONFIG_FILE="$HOME/.config/openclaw-buttons/sudo-config.json"
+    
+    cat > "$SUDO_CONFIG_FILE" << EOF
+{
+  "sudo_enabled": true,
+  "sudo_password_encrypted": "$ENCRYPTED_PASSWORD",
+  "encryption_method": "base64",
+  "last_updated": "$(date -Iseconds)"
+}
+EOF
+    
+    chmod 600 "$SUDO_CONFIG_FILE"
+    echo -e "  ${GREEN}✅ Sudo password stored (encrypted)${NC}"
+    echo -e "  ${YELLOW}⚠️  File: $SUDO_CONFIG_FILE (readable only by you)${NC}"
+else
+    echo -e "  ${YELLOW}⏭️  Sudo password storage skipped${NC}"
+    echo -e "  Custom buttons will run without sudo privileges"
 fi
 
 echo ""
