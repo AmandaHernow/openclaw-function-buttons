@@ -55,6 +55,20 @@
       "description": "Browse and manage available buttons",
       "category": "management",
       "essential": true
+    },
+    {
+      "id": "update-system",
+      "name": "Update System",
+      "description": "Check for updates and manage channels",
+      "category": "management",
+      "essential": false
+    },
+    {
+      "id": "settings-manager",
+      "name": "Settings Manager",
+      "description": "Configure button behavior and system settings",
+      "category": "management",
+      "essential": false
     }
   ],
   "categories": {

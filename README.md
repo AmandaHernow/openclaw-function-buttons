@@ -2,7 +2,7 @@
 
 ![Banner](banner.svg)
 
-**One-click desktop buttons for OpenClaw - making AI assistance accessible to everyone**
+**Professional one-click desktop buttons for OpenClaw - Enterprise-grade automation**
 
 ## 🚀 Quick Start
 
@@ -15,151 +15,218 @@ cd openclaw-function-buttons
 ./installer/one-command-setup.sh
 ```
 
-The smart installer will guide you through:
-1. **Installation location** - Choose where buttons are installed
-2. **Button selection** - Pick which optional buttons to install
-3. **Automatic setup** - Everything configured automatically
+The professional installer will guide you through:
+1. **Installation location** - Home directory, Desktop, or both
+2. **Button selection** - Choose which optional buttons to install
+3. **CLI installation** - Optional command-line interface
+4. **Automatic configuration** - Everything set up automatically
 
-### Uninstallation
+### Command Line Interface
 
 ```bash
-# Run the uninstaller
-cd openclaw-function-buttons
-./installer/uninstall.sh
+# After installation, use the CLI
+openclaw_buttons update      # Check for updates
+openclaw_buttons install     # Run installer again
+openclaw_buttons settings    # Open Settings Manager
+openclaw_buttons help        # Show help
 ```
 
-## 📋 What You Get
+## 📋 Professional Features
 
-### 🎯 Essential Buttons (Always Installed)
-- **Gateway Restart** - Fix connection issues instantly
+### 🎯 Channel System (Stable/Beta/Dev)
+- **Stable Channel** - Tested, reliable releases for production
+- **Beta Channel** - New features with testing, for adventurous users  
+- **Dev Channel** - Latest changes, may be unstable, for developers
+- **Easy switching** - Change channels anytime via Settings
+
+### 🔧 Enterprise Configuration
+- **Gateway Command Configuration** - Choose system vs user gateway
+- **Button Visibility Management** - Show/hide buttons as needed
+- **Installation Management** - View, change, or uninstall locations
+- **Desktop Shortcuts Toggle** - Enable/disable desktop integration
+
+### 🚀 Update System
+- **Automatic update checks** - Stay current with latest features
+- **One-click updates** - Update all buttons with single click
+- **Channel-aware updates** - Get updates appropriate for your channel
+- **Backup before update** - Automatic backups prevent data loss
+
+### 📁 Professional Structure
+```
+openclaw-function-buttons/
+├── library/                    # Complete button library
+│   ├── button-library.json    # Button catalog with metadata
+│   ├── *.sh                   # All button scripts
+│   ├── icons/*.svg           # Professional SVG icons
+│   └── button-library.sh     # Library browser
+├── installer/                 # Professional installer
+│   ├── one-command-setup.sh  # Smart interactive installer
+│   └── uninstall.sh          # Complete removal
+├── channels.json             # Channel configuration
+├── openclaw_buttons          # CLI interface
+├── VERSION                   # Version tracking
+└── README.md                 # This documentation
+```
+
+## 🎯 Available Buttons
+
+### Essential Buttons (Always Installed)
+- **Gateway Restart** - Fix connection issues (configurable command)
 - **Save Context** - Save conversations to prevent memory loss
-- **Add More** - Add new buttons from the library (plus sign icon)
+- **Add More** - Add new buttons from library (plus icon)
 - **Button Library** - Browse and manage available buttons
 
-### 📦 Optional Buttons (Choose During Installation)
+### Optional Buttons (Select During Installation)
 - **Memory Backup** - Create full backups of all memory files
 - **System Status** - Check OpenClaw health and system status
 - **Quick Chat** - Open webchat interface instantly
 - **Cron Manager** - Manage and monitor scheduled tasks
+- **Update System** - Check for updates and manage channels
+- **Settings Manager** - Configure all system settings
 
-## 🎯 Smart Features
+## ⚙️ Settings & Configuration
 
-### 🔧 Button Library System
-- **Selective installation** - Choose only the buttons you need
-- **Easy expansion** - Add more buttons anytime with "Add More"
-- **Category organization** - Buttons grouped by function
-- **Essential vs Optional** - Core functionality always available
+### Gateway Command Configuration
+Choose how gateway restart works:
+- **System Service** (Recommended) - `sudo systemctl restart openclaw-gateway-system`
+- **User Command** - `openclaw gateway restart`
+- **Custom Command** - Define your own restart command
 
-### 📁 Flexible Installation
-Choose where buttons are installed:
-1. **Home directory** (`~/OpenClaw-Buttons/`) - Organized and out of sight
-2. **Desktop** - Easy one-click access
-3. **Both locations** - Best of both worlds
+### Button Visibility Management
+- Show/hide individual buttons
+- Warning when hiding management buttons
+- Easy restoration of hidden buttons
+- Terminal access always available
 
-### 🖱️ One-Click Operation
-1. **Double-click desktop button**
-2. **Action executes automatically**
-3. **Results shown in terminal**
-4. **Close when done**
+### Installation Management
+- View current installation contents
+- Change installation location
+- Complete uninstallation
+- Multiple installation support
 
-No commands to remember, no configuration needed.
+## 🔄 Update System
 
-## 🛠️ For Advanced Users
-
-### Manual Button Management
+### Automatic Updates
 ```bash
-# Run installer again to add more buttons
+# Check for updates
+openclaw_buttons update
+
+# Or use the Update System button
+# (Opens interactive update interface)
+```
+
+### Channel Management
+```bash
+# Change channel via CLI
+openclaw_buttons settings
+
+# Or edit ~/.config/openclaw-buttons/config.json
+{
+  "current_channel": "stable",
+  "auto_update": false
+}
+```
+
+## 🛠️ For System Administrators
+
+### Deployment Options
+1. **Standard Deployment** - Interactive installer for end users
+2. **Silent Deployment** - Scripted installation for multiple systems
+3. **Custom Configuration** - Pre-configured settings files
+4. **Enterprise Integration** - Integrate with existing management systems
+
+### Security Features
+- **Configurable gateway commands** - Follow organizational policies
+- **Controlled updates** - Channel-based update management
+- **Backup system** - Automatic backups before updates
+- **Permission management** - Proper sudo integration
+
+### Monitoring & Maintenance
+- **System status monitoring** - Built-in health checks
+- **Update notifications** - Stay informed of available updates
+- **Configuration backup** - Settings preserved during updates
+- **Logging** - Operation logs for troubleshooting
+
+## 📊 Version Information
+
+**Program Name:** OpenClaw Function Buttons  
+**Developed by:** Amanda Hernow & Cleo Nightshade  
+**Version:** Beta 1.1 (Channel: Beta)  
+**Last Updated:** 2026-02-14  
+**Purpose:** Professional one-click desktop automation for OpenClaw  
+**License:** MIT License
+
+### Installation Instructions
+```bash
+git clone https://github.com/AmandaHernow/openclaw-function-buttons.git
 cd openclaw-function-buttons
 ./installer/one-command-setup.sh
-
-# Check available buttons
-./library/button-library.sh
 ```
 
-### Creating Custom Buttons
-1. Create script in `library/` directory
-2. Design icon in `library/icons/`
-3. Add entry to `library/button-library.json`
-4. Run installer to add to your system
-
-### Library Structure
-```
-library/
-├── button-library.json      # Button catalog and metadata
-├── *.sh                     # Button scripts
-├── icons/*.svg             # Button icons
-└── button-library.sh       # Library browser
+### Uninstall Instructions
+```bash
+cd openclaw-function-buttons
+./installer/uninstall.sh
+# or
+openclaw_buttons uninstall
 ```
 
-## 📁 Project Structure
+## 🧪 Testing & Quality Assurance
 
-```
-openclaw-function-buttons/
-├── library/                    # Button library system
-│   ├── button-library.json    # Button catalog
-│   ├── *.sh                   # All button scripts
-│   ├── icons/*.svg           # All button icons
-│   └── button-library.sh     # Library browser
-├── installer/                 # Installation system
-│   ├── one-command-setup.sh  # Smart installer
-│   └── uninstall.sh          # Complete removal
-├── docs/                     # Documentation
-│   └── PROJECT_PLAN.md       # Development roadmap
-├── logo.svg                  # Project logo
-├── banner.svg                # Project banner
-└── README.md                 # This file
-```
+### Tested Configurations
+- ✅ Kali Linux (Nightshade production environment)
+- ✅ Systemd service integration
+- ✅ Multiple installation locations
+- ✅ Update system functionality
+- ✅ Configuration persistence
 
-## 🚀 Planned Features
-
-### Coming Soon
-- **Button Template Creator** - Create custom buttons easily
-- **One-Click Updates** - Update all buttons at once
-- **Theme Support** - Different visual styles
-- **More Button Types** - Expanded functionality
-
-### Current Development Focus
-- **Stability** - Reliable one-click operation
-- **Simplicity** - Easy to understand and use
-- **Expandability** - Easy to add new buttons
-- **User Experience** - Intuitive and helpful
+### Safety Features
+- **Gateway restart testing** - Uses correct system command by default
+- **Backup before updates** - Prevents data loss
+- **Error handling** - Comprehensive error messages
+- **User confirmation** - Critical actions require confirmation
 
 ## 🤝 Contributing
 
-Want to add more buttons? Here's how:
+### Development Workflow
+1. **Fork repository** - Create your own copy
+2. **Create feature branch** - `git checkout -b feature/new-button`
+3. **Add to library** - Script + icon + metadata
+4. **Test thoroughly** - Use test suite
+5. **Submit pull request** - To appropriate channel
 
-1. **Fork the repository**
-2. **Create new button script** in `library/`
-3. **Design icon** in `library/icons/`
-4. **Add entry** to `library/button-library.json`
-5. **Test with installer**
-6. **Submit pull request**
-
-Check `docs/PROJECT_PLAN.md` for planned features and ideas.
+### Code Standards
+- **Bash scripts** - Use `set -e` for error handling
+- **JSON configuration** - Proper formatting and validation
+- **SVG icons** - Consistent style and sizing
+- **Documentation** - Keep README updated
 
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## ⚠️ Requirements
+## ⚠️ System Requirements
 
 - **OpenClaw** installed and configured
 - **Linux desktop** with .desktop file support
 - **Bash shell** available
-- **Python 3** (for JSON parsing in installer)
-- **Systemd** for service management
+- **Python 3** (for JSON parsing)
+- **jq** (for JSON processing)
+- **Systemd** (for service management)
+- **curl** (for update checks)
 
-## 🔗 Links
+## 🔗 Links & Resources
 
 - **OpenClaw Documentation**: https://docs.openclaw.ai
 - **OpenClaw Community**: https://discord.com/invite/clawd
-- **Report Issues**: GitHub Issues
-- **Live Demo**: Try the installer!
+- **GitHub Repository**: https://github.com/AmandaHernow/openclaw-function-buttons
+- **Issue Tracker**: GitHub Issues
+- **Release Channels**: Stable, Beta, Dev
 
 ---
 
-**Made with ❤️ for the OpenClaw community**
+**Professional automation for OpenClaw**
 
-*"Systems break. Memories are forever."*
+*"Systems break. Memories are forever. Automation is key."*
 
-*Simplify your OpenClaw workflow with smart one-click buttons*
+*Enterprise-grade one-click buttons for reliable AI assistance*

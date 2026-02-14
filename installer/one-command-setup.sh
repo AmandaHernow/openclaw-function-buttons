@@ -16,8 +16,9 @@ echo -e "${BLUE}🚀 OpenClaw Function Buttons - Smart Installer${NC}"
 echo "=========================================="
 
 # Configuration
-LIBRARY_DIR="$(dirname "$0")/../library"
-BUTTONS_DIR="$(dirname "$0")/../buttons"
+PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+LIBRARY_DIR="$PROJECT_DIR/library"
+BUTTONS_DIR="$PROJECT_DIR/buttons"
 LIBRARY_FILE="$LIBRARY_DIR/button-library.json"
 
 # Check if library exists
@@ -244,6 +245,27 @@ if [ "$LOCATION_CHOICE" = "2" ] || [ "$LOCATION_CHOICE" = "3" ]; then
     echo -e "\n📋 Copying shortcuts to desktop..."
     cp "$INSTALL_DIR"/*.desktop "$HOME/Desktop/" 2>/dev/null
     echo -e "${GREEN}✅ Desktop shortcuts created${NC}"
+fi
+
+# Install CLI command
+echo -e "\n🔧 Installing CLI command..."
+if [ -f "$PROJECT_DIR/openclaw_buttons" ]; then
+    # Try to install to /usr/local/bin (requires sudo)
+    if command -v sudo >/dev/null 2>&1; then
+        echo -n "Install CLI command to /usr/local/bin? (y/n) [y]: "
+        read -r CLI_CHOICE
+        if [[ ! "$CLI_CHOICE" =~ ^[Nn]$ ]]; then
+            sudo cp "$PROJECT_DIR/openclaw_buttons" /usr/local/bin/openclaw_buttons
+            sudo chmod +x /usr/local/bin/openclaw_buttons
+            echo -e "  ${GREEN}✅ CLI command installed${NC}"
+            echo -e "  Run: openclaw_buttons help"
+        else
+            echo -e "  ${YELLOW}⏭️  CLI command not installed${NC}"
+            echo -e "  You can run: $PROJECT_DIR/openclaw_buttons"
+        fi
+    else
+        echo -e "  ${YELLOW}⚠️  sudo not available, skipping CLI install${NC}"
+    fi
 fi
 
 echo ""

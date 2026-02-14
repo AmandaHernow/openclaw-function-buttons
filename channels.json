@@ -1,0 +1,28 @@
+{
+  "channels": {
+    "stable": {
+      "name": "Stable",
+      "description": "Tested, reliable releases for production use",
+      "update_url": "https://raw.githubusercontent.com/AmandaHernow/openclaw-function-buttons/stable/",
+      "recommended": true,
+      "version_prefix": ""
+    },
+    "beta": {
+      "name": "Beta",
+      "description": "New features with some testing, for adventurous users",
+      "update_url": "https://raw.githubusercontent.com/AmandaHernow/openclaw-function-buttons/beta/",
+      "recommended": false,
+      "version_prefix": "beta-"
+    },
+    "dev": {
+      "name": "Development",
+      "description": "Latest changes, may be unstable, for developers",
+      "update_url": "https://raw.githubusercontent.com/AmandaHernow/openclaw-function-buttons/dev/",
+      "recommended": false,
+      "version_prefix": "dev-"
+    }
+  },
+  "current_channel": "stable",
+  "last_update_check": null,
+  "auto_update": false
+}
